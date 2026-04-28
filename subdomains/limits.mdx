@@ -1,0 +1,58 @@
+---
+title: "Free Tier Subdomain and DNS Record Limits on nxtdev.xyz"
+description: "Understand the free tier limits for subdomains and DNS records, how the risk score works, and when automatic suspension is triggered."
+sidebarTitle: "Limits"
+---
+
+nxtdev.xyz is free, with no credit card required. The free tier is designed to cover the vast majority of personal projects, side projects, and staging environments. This page documents every limit that applies to a standard account.
+
+## Account and subdomain limits
+
+| Limit | Value |
+|-------|-------|
+| Subdomains per account | **2** |
+| DNS records per subdomain | **100** |
+| Edits to existing records | Unlimited (while under 100 records) |
+
+The subdomain counter is shown directly in the claim form as `X/2 used` so you always know how many slots you have left.
+
+<Note>
+  The 100-record limit is a combined count. Both standard DNS records and delegated nameserver entries count toward the same 100-record ceiling for a subdomain.
+</Note>
+
+## DNS record limit in detail
+
+Each subdomain tracks two pools that share the same cap:
+
+- **DNS records** — A, AAAA, CNAME, MX, TXT, SRV, and any other record types you add through the Records editor.
+- **Delegated nameserver entries** — NS entries you configure when pointing your own nameservers at the subdomain.
+
+The dashboard displays this combined count as `Records: X/100` on each subdomain card. Once you reach 100, you must delete an existing record before adding a new one.
+
+<Tip>
+  There is no limit on editing or updating records you have already created, only on the total number of records that can exist at one time.
+</Tip>
+
+## Risk score and automatic suspension
+
+Every subdomain has a **risk score** — a number that accumulates as the platform's safety checks process the records associated with it. The score reflects signals such as IP reputation, phishing pattern matches, and abuse reports.
+
+<AccordionGroup>
+  <Accordion title="How the risk score accumulates">
+    The risk score increases when safety checks flag activity on a subdomain — for example, pointing an `A` record at an IP address with a known abuse history, or adding records that match phishing patterns. Normal, legitimate usage does not affect the score.
+  </Accordion>
+
+  <Accordion title="Automatic suspension">
+    When a subdomain's risk score crosses the platform's suspension threshold, the subdomain is automatically suspended. Its DNS stops resolving and the status badge changes from **Active** to **Suspended**. No manual review step delays the suspension once the threshold is exceeded.
+  </Accordion>
+
+  <Accordion title="Appealing a suspension">
+    If your subdomain is suspended and you believe it is a false positive, contact the nxtdev.xyz support team. The risk score and the reason for the suspension will be reviewed. Legitimate projects are restored promptly.
+  </Accordion>
+</AccordionGroup>
+
+The current risk score for each subdomain is visible in the dashboard beneath the subdomain's FQDN.
+
+## Upgrading beyond free tier limits
+
+To remove the 100-record cap, you can delegate your subdomain to your own nameservers. Pointing your nameservers at nxtdev.xyz infrastructure gives you full DNS control with unlimited records. The 2-subdomain-per-account limit remains in place regardless of delegation.

@@ -1,0 +1,73 @@
+---
+title: "nxtdev.xyz FAQ: Limits, DNS, Verification, and More"
+description: "Answers to common questions about nxtdev.xyz free subdomains, DNS record limits, GitHub verification, propagation, and nameserver delegation."
+sidebarTitle: "FAQ"
+---
+
+nxtdev.xyz is designed to be simple, but a few questions come up again and again. The answers below cover pricing, limits, DNS behaviour, and what happens in edge cases so you can get back to building.
+
+<AccordionGroup>
+  <Accordion title="Is nxtdev.xyz really free?">
+    Yes — completely free, no credit card required. Every account includes 2 subdomains and up to 100 DNS records per subdomain, and that free tier is not going away. There is no trial period and no hidden upgrade wall.
+  </Accordion>
+
+  <Accordion title="Why do I need to link my GitHub account?">
+    nxtdev.xyz uses GitHub OAuth as an identity layer to reduce abuse and keep the namespace clean for legitimate developers. You must connect your GitHub account before you can claim a subdomain. Once linked, you can manage all your records without any further verification steps.
+  </Accordion>
+
+  <Accordion title="How long does DNS propagation take?">
+    Records typically propagate globally in under 60 seconds. nxtdev.xyz manages DNS through Cloudflare's authoritative network, so changes reach resolvers worldwide almost immediately. If a record does not appear right away, wait 60 seconds and run a propagation check from your dashboard.
+  </Accordion>
+
+  <Accordion title="Can I use nxtdev.xyz for production?">
+    Yes. The DNS infrastructure behind nxtdev.xyz is Cloudflare — the same network that powers millions of production sites. Your subdomain gets the same reliability and global performance as any Cloudflare-managed zone.
+  </Accordion>
+
+  <Accordion title="What is the subdomain and record limit?">
+    Each account can hold **2 base subdomains** on the free tier. Each subdomain supports up to **100 DNS records**, including A, AAAA, CNAME, TXT, MX, SRV, and delegated NS records combined. If you need more records, nameserver delegation gives you full external control without a per-record cap on your side.
+  </Accordion>
+
+  <Accordion title="Can I point an A or AAAA record to a private or local IP?">
+    No. Private address ranges are blocked on A and AAAA records for security reasons. This includes:
+
+    - `10.0.0.0/8`
+    - `192.168.0.0/16`
+    - `172.16.0.0–172.31.255.255`
+
+    Use a public IP address for your server. If you are testing locally, you do not need a public DNS record.
+  </Accordion>
+
+  <Accordion title="What happens if my subdomain gets suspended?">
+    When a subdomain is suspended, all DNS changes and nameserver delegation are blocked. Existing records remain in place but cannot be modified. To appeal a suspension, email [support@nxtdev.xyz](mailto:support@nxtdev.xyz) with your subdomain and a brief explanation.
+  </Accordion>
+
+  <Accordion title="Can I delete my subdomain and reclaim the label later?">
+    You can delete a subdomain at any time, and the slot frees up so you can claim a different label. However, the deleted label becomes immediately available for anyone else to claim — there is no reservation period. If the label matters to you, think carefully before deleting.
+  </Accordion>
+
+  <Accordion title="What is nameserver delegation?">
+    Nameserver delegation lets you point your subdomain's DNS to an external provider — for example, your own BIND server or another DNS host. Once delegation is active, nxtdev.xyz defers all resolution for your subdomain to those nameservers, giving you full control over every record type and TTL. See [Delegation overview](/delegation/overview) for setup instructions.
+
+    <Warning>
+      While delegation is enabled, editing DNS records directly in the nxtdev.xyz dashboard is disabled. Remove delegation first if you want to switch back to managing records here.
+    </Warning>
+  </Accordion>
+
+  <Accordion title="What DNS record types are supported?">
+    nxtdev.xyz supports the following record types:
+
+    | Type | Common use |
+    |------|------------|
+    | `A` | Point to an IPv4 address |
+    | `AAAA` | Point to an IPv6 address |
+    | `CNAME` | Alias to Vercel, Netlify, Render, or any hostname |
+    | `TXT` | SPF, DKIM, ownership verification tokens |
+    | `MX` | Mail exchange for self-hosted or managed email |
+    | `SRV` | Game servers, XMPP, and custom protocols |
+    | `NS` | Nameserver delegation only |
+
+    <Note>
+      NS records are only accepted when you are setting up nameserver delegation at the apex of your base subdomain. You cannot add arbitrary NS records for other purposes.
+    </Note>
+  </Accordion>
+</AccordionGroup>

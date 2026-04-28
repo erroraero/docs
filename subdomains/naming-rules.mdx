@@ -1,0 +1,92 @@
+---
+title: "Subdomain Label Naming Rules and Restrictions on nxtdev.xyz"
+description: "Exact rules for valid subdomain labels on nxtdev.xyz: length limits, allowed characters, forbidden patterns, reserved names, and safety system blocks."
+sidebarTitle: "Naming Rules"
+---
+
+The label you choose becomes the left-most part of your subdomain — for example, the label `myproject` produces `myproject.nxtdev.xyz`. Labels are validated against a strict set of rules before a subdomain is created. This page documents every rule extracted directly from the platform's validator.
+
+## Length constraints
+
+| Constraint | Value |
+|------------|-------|
+| Minimum length | **4 characters** |
+| Maximum length | **32 characters** |
+
+Labels shorter than 4 characters are rejected for regular accounts. Labels longer than 32 characters are rejected unconditionally. The admin team may reserve labels shorter than 4 characters for special purposes.
+
+## Allowed characters
+
+Labels may only contain the following characters:
+
+- Lowercase letters: `a` through `z`
+- Digits: `0` through `9`
+- Hyphens: `-`
+
+No spaces, dots, underscores, or special characters are permitted. Uppercase letters are accepted in the input field but are automatically converted to lowercase before validation and storage.
+
+<Note>
+  Lowercasing is applied automatically. Submitting `MyProject` is identical to submitting `myproject`. The resulting subdomain is always fully lowercase.
+</Note>
+
+## Forbidden patterns
+
+Even if a label uses only allowed characters, the following patterns cause it to be rejected:
+
+| Pattern | Rule |
+|---------|------|
+| Starts with a hyphen | Not allowed — e.g. `-myapp` is invalid |
+| Ends with a hyphen | Not allowed — e.g. `myapp-` is invalid |
+| Contains consecutive hyphens | Not allowed — e.g. `my--app` is invalid |
+
+These restrictions are consistent with standard DNS label rules and the IDNA specification.
+
+## Examples
+
+```text
+# Valid labels
+alice
+my-project
+dev42
+api-v2
+hello-world-2025
+
+# Invalid labels — too short
+ab
+xyz
+
+# Invalid labels — forbidden characters
+my_project       (underscore not allowed)
+my.project       (dot not allowed)
+my project       (space not allowed)
+
+# Invalid labels — forbidden patterns
+-myapp           (starts with hyphen)
+myapp-           (ends with hyphen)
+my--app          (consecutive hyphens)
+
+# Invalid labels — too long (over 32 characters)
+this-label-is-way-too-long-to-be-valid
+```
+
+## Reserved labels
+
+Some labels are reserved by the nxtdev.xyz admin team and cannot be claimed through the normal flow. Reserved labels may be shorter than 4 characters or may correspond to names the platform uses internally.
+
+<Note>
+  If the availability checker returns `"Reserved - contact Administrator to claim this domain"`, the label exists in the reserved list. You cannot claim it unless an admin explicitly assigns it to your account.
+</Note>
+
+Reserved labels still follow all character and pattern rules — they are simply blocked from public registration regardless of whether they look syntactically valid.
+
+## Safety system: phishing and impersonation blocks
+
+After structural validation, every label is checked against the platform's safety system for phishing keywords and impersonation patterns. This check runs even on labels that would otherwise be valid.
+
+<Warning>
+  Labels that match known phishing patterns or impersonate services (for example, patterns associated with credential harvesting pages) are blocked automatically. The availability checker returns `"reason": "Blocked by safety policy"`. This block cannot be bypassed.
+</Warning>
+
+Legitimate project names are never blocked. If you believe your label was incorrectly flagged, contact `abuse@nxtdev.xyz` to appeal.
+
+

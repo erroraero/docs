@@ -1,0 +1,59 @@
+---
+title: "nxtdev.xyz — Free Developer Subdomains on Cloudflare"
+description: "Get a free subdomain under nxtdev.xyz backed by Cloudflare. Claim up to 2 subdomains, manage up to 100 DNS records each, with no credit card required."
+sidebarTitle: "Introduction"
+---
+
+nxtdev.xyz is a free subdomain service that lets you claim a label under `nxtdev.xyz` — for example, `alice.nxtdev.xyz` — and manage its DNS records from a clean dashboard. Every subdomain runs on Cloudflare's global network, so your records are live in seconds with no propagation delays.
+
+## What you get
+
+The free tier gives you everything you need to ship a real project:
+
+- **2 subdomains** per account, free forever — no credit card required
+- **Up to 100 DNS records** per subdomain, including delegated NS records
+- **Cloudflare-backed DNS** — global propagation usually under 60 seconds
+- **Safety checks** on every submission — phishing patterns and high-risk IPs are blocked automatically
+
+## Supported record types
+
+You can create any of the following record types from the dashboard:
+
+| Type | Common use |
+|------|------------|
+| `A` | Point to an IPv4 server address |
+| `AAAA` | Point to an IPv6 server address |
+| `CNAME` | Vercel, Netlify, Render, or any hostname-based host |
+| `TXT` | SPF, DKIM, ownership verification tokens |
+| `MX` | Self-hosted or managed email routing |
+| `SRV` | Game servers, XMPP, and custom protocols |
+| `NS` | Delegate your subdomain to your own nameservers |
+
+<Note>
+  `NS` records are for delegation only. Once you add nameservers, DNS editing inside the dashboard becomes read-only. Remove all NS records to return to managed mode.
+</Note>
+
+## Before you can claim
+
+You must link a GitHub account to your nxtdev.xyz account before claiming any subdomain. This is a one-time step that verifies your identity and helps protect the shared `nxtdev.xyz` namespace from abuse.
+
+<Warning>
+  The claim button stays disabled until GitHub verification is complete. Navigate to **Settings** in the dashboard to link your account.
+</Warning>
+
+## Explore the docs
+
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="bolt" href="/quickstart">
+    Claim your first subdomain and add a DNS record in under two minutes.
+  </Card>
+  <Card title="Claiming a subdomain" icon="tag" href="/subdomains/claiming">
+    Learn the naming rules and how the claim process works.
+  </Card>
+  <Card title="DNS records" icon="server" href="/dns/overview">
+    Create and manage A, CNAME, MX, TXT, SRV, and NS records.
+  </Card>
+  <Card title="Delegation" icon="network-wired" href="/delegation/overview">
+    Point your own nameservers at your subdomain for full DNS control.
+  </Card>
+</CardGroup>

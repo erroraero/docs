@@ -1,0 +1,91 @@
+---
+title: "Fix Subdomain Claim, DNS, and Propagation Errors"
+description: "Step-by-step fixes for errors you may encounter when claiming a subdomain, adding DNS records, or waiting for propagation on nxtdev.xyz."
+sidebarTitle: "Troubleshooting"
+---
+
+Most issues on nxtdev.xyz fall into a handful of categories: claim errors, record rejections, delegation conflicts, and propagation delays. Work through the relevant section below to resolve your issue quickly.
+
+<AccordionGroup>
+  <Accordion title='"Blocked by safety policy" when claiming a subdomain'>
+    The label you entered matches a blocked keyword pattern used to prevent phishing and impersonation. The system does not reveal which pattern matched to avoid gaming.
+
+    **Fix:** Choose a different subdomain label. Avoid names that closely resemble well-known brands, services, or credential-harvesting terms. Legitimate project names are never blocked.
+  </Accordion>
+
+  <Accordion title='"Already taken" when claiming a subdomain'>
+    Another user has already claimed that label under `nxtdev.xyz`.
+
+    **Fix:** Choose a different label. There is no waitlist or transfer mechanism for taken subdomains.
+  </Accordion>
+
+  <Accordion title="A or AAAA record rejected with an IP reputation error">
+    nxtdev.xyz checks every IP submitted for A and AAAA records against [AbuseIPDB](https://www.abuseipdb.com/). If the IP carries a high abuse confidence score, the record is rejected to protect the shared namespace.
+
+    **Fix:** Use a different server or IP address. If you believe your IP was flagged in error, contact your hosting provider — they can request removal from AbuseIPDB on your behalf. You can also check the score yourself at [abuseipdb.com](https://www.abuseipdb.com/check).
+  </Accordion>
+
+  <Accordion title='Cannot add records — "Delegation enabled" message'>
+    Nameserver delegation is active on your subdomain. While delegation is enabled, the nxtdev.xyz dashboard treats DNS records as read-only because an external nameserver is the authority.
+
+    <Steps>
+      <Step title="Open the Nameservers tab">
+        Go to your subdomain in the dashboard and navigate to the **Nameservers** tab.
+      </Step>
+      <Step title="Remove all delegated nameservers">
+        Delete each NS record listed under your delegation configuration.
+      </Step>
+      <Step title="Return to DNS Records">
+        Once delegation is removed, the **DNS Records** tab becomes editable and you can add or modify records normally.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title='Cannot add records — subdomain shows "Suspended"'>
+    Your subdomain has been suspended following a safety review. DNS changes are blocked while the suspension is active.
+
+    **Fix:** Email [support@nxtdev.xyz](mailto:support@nxtdev.xyz) to appeal. Include your subdomain label and a brief description of what you are using it for. Suspensions are reviewed manually and are reversible for legitimate use cases.
+  </Accordion>
+
+  <Accordion title="Propagation check shows no answer">
+    The record has not resolved yet, or the content may be incorrect.
+
+    <Steps>
+      <Step title="Wait 60 seconds and retry">
+        Cloudflare propagates most changes in under 60 seconds. Run the propagation check again from your dashboard after waiting.
+      </Step>
+      <Step title="Verify the record content">
+        Open the record in your dashboard and confirm the value is correct — for example, that a CNAME points to the right hostname and an A record contains a valid public IP.
+      </Step>
+      <Step title="Check the record host">
+        Make sure you are querying the exact hostname the record is set for. For example, if the record host is `api`, you should be resolving `api.yourname.nxtdev.xyz`, not `yourname.nxtdev.xyz`.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title='"You must link your GitHub account" error'>
+    Your account has not completed GitHub OAuth verification. nxtdev.xyz requires a verified GitHub connection before you can claim or manage subdomains.
+
+    <Steps>
+      <Step title="Open your profile settings">
+        Click your avatar in the top-right corner of the dashboard and select **Settings** or **Profile**.
+      </Step>
+      <Step title="Connect GitHub">
+        Find the GitHub section and click **Connect**. You will be redirected to GitHub to authorise the nxtdev.xyz OAuth app.
+      </Step>
+      <Step title="Retry your action">
+        After authorising, return to the subdomain claim flow and try again.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Record count shows 99/100 or 100/100">
+    You have reached the per-subdomain limit of 100 DNS records. No new records can be added until existing ones are removed.
+
+    **Fix:** Review your records and delete any that are no longer needed. If you legitimately require more than 100 records, set up [nameserver delegation](/delegation/overview) and manage records with your own external DNS provider, which has no cap imposed by nxtdev.xyz.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  If none of the above resolves your issue, contact the support team at [support@nxtdev.xyz](mailto:support@nxtdev.xyz). Include your subdomain label, the action you were trying to perform, and any error message you received.
+</Note>

@@ -1,0 +1,59 @@
+---
+title: "Managing DNS Records on Your nxtdev.xyz Subdomain"
+description: "Learn how to create, edit, and delete DNS records for your nxtdev.xyz subdomain, including host naming rules, TTL limits, and proxy options."
+sidebarTitle: "Overview"
+---
+
+DNS records let you control how traffic reaches your subdomain. From the dashboard you can add any supported record type, set a custom TTL, enable Cloudflare proxying for eligible records, and delete records you no longer need — all without touching a registrar or zone editor.
+
+## Getting to the Records page
+
+Navigate to **Dashboard → Domains**, select your subdomain, then click **Records** in the subdomain navigation.
+
+## Creating a record
+
+<Steps>
+  <Step title="Open the Create DNS record form">
+    At the top of the Records page you will see the **Create DNS record** card. The form shows the fields relevant to the record type you select.
+  </Step>
+  <Step title="Choose a record type">
+    Use the **Type** dropdown to select one of the supported types: A, AAAA, CNAME, TXT, MX, or SRV. The form fields update automatically to match the chosen type.
+  </Step>
+  <Step title="Set the Host">
+    Enter a value in the **Host** field.
+
+    - Use `@` (the default) to target the subdomain itself — for example, `alice.nxtdev.xyz`.
+    - Enter a relative name to create a sub-host. For example, entering `api` on `alice.nxtdev.xyz` creates `api.alice.nxtdev.xyz`.
+
+    Host labels must be lowercase alphanumeric and may contain `.`, `_`, and `-`. Labels cannot start or end with `.` and are capped at 63 characters.
+  </Step>
+  <Step title="Fill in the record-specific fields">
+    Provide the **Content** (or **Target** for SRV records) and any additional fields such as Priority, Weight, or Port. See [Record Types](/dns/record-types) for the full field reference per type.
+  </Step>
+  <Step title="Set the TTL">
+    Enter a **TTL** (time-to-live) in seconds. The minimum is **60**, the maximum is **86400**, and the default is **3600**. A lower TTL means resolvers re-query more frequently; a higher TTL reduces query volume but slows down propagation of future changes.
+  </Step>
+  <Step title="Enable proxying (optional)">
+    For A, AAAA, and CNAME records, a **Proxied (Cloudflare)** checkbox appears. When checked, traffic routes through the Cloudflare proxy network instead of resolving directly to your origin. Proxying is not available for TXT, MX, SRV, or NS records.
+  </Step>
+  <Step title="Submit the form">
+    Click **Create record**. The new record appears in the Records table below.
+  </Step>
+</Steps>
+
+## Editing and deleting records
+
+Each row in the Records table has two action buttons:
+
+- **Edit** — opens the record's edit page where you can update any field.
+- **Delete** — permanently removes the record. The button is disabled while delegation is enabled or the subdomain is suspended.
+
+## Limitations and blocked states
+
+<Note>
+  When NS delegation is enabled for your subdomain, the DNS editing form is hidden and all records become read-only. To make changes, go to **Nameserver Settings** and remove the delegation first.
+</Note>
+
+<Warning>
+  If your subdomain is suspended, DNS changes are blocked until the suspension is lifted. The Delete button is also disabled in this state.
+</Warning>

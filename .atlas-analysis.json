@@ -1,0 +1,84 @@
+{
+  "projectType": "saas",
+  "projectName": "nxtdev.xyz",
+  "projectDescription": "A free subdomain service that lets developers claim subdomains under nxtdev.xyz and manage DNS records through a Cloudflare-backed dashboard.",
+  "theme": "luma",
+  "primaryColor": "#00ff88",
+  "lightColor": "#00ff88",
+  "darkColor": "#00cc6a",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Subdomains",
+            "pages": [
+              "subdomains/claiming",
+              "subdomains/limits",
+              "subdomains/naming-rules"
+            ]
+          },
+          {
+            "group": "DNS Records",
+            "pages": [
+              "dns/overview",
+              "dns/record-types",
+              "dns/propagation"
+            ]
+          },
+          {
+            "group": "Delegation",
+            "pages": [
+              "delegation/overview",
+              "delegation/nameservers"
+            ]
+          },
+          {
+            "group": "Safety & Abuse",
+            "pages": [
+              "safety/overview",
+              "safety/reporting"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "faq",
+              "troubleshooting"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Claim up to 2 free subdomains under nxtdev.xyz",
+    "Full DNS record management (A, AAAA, CNAME, TXT, MX, SRV, NS)",
+    "Cloudflare-backed global propagation in seconds",
+    "GitHub OAuth identity verification",
+    "Nameserver delegation for external DNS providers",
+    "Cloudflare proxy support for A/AAAA/CNAME records",
+    "Built-in safety system with phishing detection and IP reputation checks",
+    "DNS propagation checker via DNS-over-HTTPS",
+    "Abuse reporting system"
+  ],
+  "publicApiSurface": [
+    "GET /api/subdomain-availability?label=<label>",
+    "GET /api/propagation?recordId=<id>",
+    "GET /api/health",
+    "GET /api/domain-verify",
+    "Dashboard: /dashboard/domains — claim and manage subdomains",
+    "Dashboard: /dashboard/domains/[id]/records — create, edit, delete DNS records",
+    "Dashboard: /dashboard/domains/[id]/nameservers — manage NS delegation",
+    "Dashboard: /dashboard/reports — view abuse reports",
+    "Public: /report — submit abuse reports"
+  ]
+}

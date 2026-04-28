@@ -1,0 +1,172 @@
+---
+title: "Supported DNS Record Types for nxtdev.xyz Subdomains"
+description: "Field reference and validation rules for every DNS record type you can create on nxtdev.xyz: A, AAAA, CNAME, TXT, MX, SRV, and NS."
+sidebarTitle: "Record Types"
+---
+
+nxtdev.xyz supports seven DNS record types. Each type has its own set of required fields and validation rules enforced at save time. The sections below document every field, its constraints, and a practical example you can adapt for your own use.
+
+<AccordionGroup>
+  <Accordion title="A — IPv4 address">
+    An A record maps a host to an IPv4 address. Use it to point your subdomain (or a sub-host) directly at a server.
+
+    | Field     | Required | Constraints |
+    |-----------|----------|-------------|
+    | `host`    | Yes      | `@` or a relative label; max 63 chars; lowercase alphanumeric, `.`, `_`, `-` |
+    | `content` | Yes      | Valid IPv4 address. Private ranges (10.x, 192.168.x, 172.16–31.x) are blocked. |
+    | `ttl`     | No       | Integer, 60–86400. Defaults to 3600. |
+    | `proxied` | No       | `true` or `false`. Routes traffic through Cloudflare when enabled. |
+
+    **Use case:** Point your apex subdomain at a VPS.
+
+    ```text example A record
+    Type:    A
+    Host:    @
+    Content: 203.0.113.42
+    TTL:     3600
+    Proxied: true
+    ```
+  </Accordion>
+
+  <Accordion title="AAAA — IPv6 address">
+    An AAAA record maps a host to an IPv6 address. It works identically to an A record but accepts IPv6 notation.
+
+    | Field     | Required | Constraints |
+    |-----------|----------|-------------|
+    | `host`    | Yes      | Same rules as A record host. |
+    | `content` | Yes      | Valid IPv6 address. Private ranges are blocked. |
+    | `ttl`     | No       | Integer, 60–86400. Defaults to 3600. |
+    | `proxied` | No       | Available for AAAA records, same behavior as A. |
+
+    **Use case:** Serve traffic over IPv6 from a dual-stack server.
+
+    ```text example AAAA record
+    Type:    AAAA
+    Host:    @
+    Content: 2001:db8::1
+    TTL:     3600
+    Proxied: false
+    ```
+  </Accordion>
+
+  <Accordion title="CNAME — hostname alias">
+    A CNAME record creates an alias from one hostname to another. The content must be a hostname — IP addresses are rejected.
+
+    | Field     | Required | Constraints |
+    |-----------|----------|-------------|
+    | `host`    | Yes      | Relative label or `@`; max 63 chars. |
+    | `content` | Yes      | Valid hostname (max 255 chars, no consecutive dots, not an IP). |
+    | `ttl`     | No       | Integer, 60–86400. Defaults to 3600. |
+    | `proxied` | No       | Available for CNAME records. |
+
+    **Use case:** Point your subdomain at a Vercel deployment.
+
+    ```text example CNAME record
+    Type:    CNAME
+    Host:    @
+    Content: cname.vercel-dns.com
+    TTL:     3600
+    Proxied: false
+    ```
+  </Accordion>
+
+  <Accordion title="TXT — text data">
+    A TXT record stores arbitrary text. Common uses include SPF policies, DKIM public keys, and domain ownership verification tokens.
+
+    | Field     | Required | Constraints |
+    |-----------|----------|-------------|
+    | `host`    | Yes      | Relative label or `@`; max 63 chars. |
+    | `content` | Yes      | String, 1–1024 characters. |
+    | `ttl`     | No       | Integer, 60–86400. Defaults to 3600. |
+
+    Proxying is not available for TXT records.
+
+    **Use case:** Add an SPF record to authorize your mail sender.
+
+    ```text example TXT record
+    Type:    TXT
+    Host:    @
+    Content: v=spf1 include:sendgrid.net ~all
+    TTL:     3600
+    ```
+  </Accordion>
+
+  <Accordion title="MX — mail exchange">
+    An MX record specifies the mail server responsible for accepting email for a host. Lower priority values are tried first.
+
+    | Field      | Required | Constraints |
+    |------------|----------|-------------|
+    | `host`     | Yes      | Relative label or `@`; max 63 chars. |
+    | `content`  | Yes      | Valid hostname (not an IP). |
+    | `priority` | Yes      | Integer, 0–65535. Defaults to 10 when left blank. |
+    | `ttl`      | No       | Integer, 60–86400. Defaults to 3600. |
+
+    Proxying is not available for MX records.
+
+    **Use case:** Route incoming email through a third-party mail service.
+
+    ```text example MX record
+    Type:     MX
+    Host:     @
+    Content:  mail.example.com
+    Priority: 10
+    TTL:      3600
+    ```
+  </Accordion>
+
+  <Accordion title="SRV — service locator">
+    An SRV record advertises the location of a specific service. The DNS name it creates follows the pattern `_service._proto.host.subdomain.nxtdev.xyz`.
+
+    | Field      | Required | Constraints |
+    |------------|----------|-------------|
+    | `host`     | Yes      | Relative label or `@`; max 63 chars. |
+    | `service`  | Yes      | Must start with `_`, e.g. `_minecraft`. Lowercase alphanumeric and `-`. |
+    | `proto`    | Yes      | One of `_tcp`, `_udp`, or `_tls`. |
+    | `priority` | Yes      | Integer, 0–65535. Defaults to 0. |
+    | `weight`   | Yes      | Integer, 0–65535. Defaults to 0. |
+    | `port`     | Yes      | Integer, 1–65535. |
+    | `target`   | Yes      | Valid hostname (not an IP). |
+    | `ttl`      | No       | Integer, 60–86400. Defaults to 3600. |
+
+    Proxying is not available for SRV records.
+
+    **Use case:** Advertise a Minecraft Java server so clients can connect with just your subdomain name.
+
+    ```text example SRV record
+    Type:     SRV
+    Host:     @
+    Service:  _minecraft
+    Proto:    _tcp
+    Priority: 0
+    Weight:   0
+    Port:     25565
+    Target:   mc.example.com
+    TTL:      3600
+    ```
+  </Accordion>
+
+  <Accordion title="NS — nameserver">
+    An NS record delegates DNS authority for a zone to one or more nameservers.
+
+    | Field     | Required | Constraints |
+    |-----------|----------|-------------|
+    | `host`    | Yes      | Relative label or `@`; max 63 chars. |
+    | `content` | Yes      | Valid nameserver hostname (not an IP). |
+    | `ttl`     | No       | Integer, 60–86400. Defaults to 3600. |
+
+    Proxying is not available for NS records.
+
+    <Warning>
+      Adding NS records at the apex (`@`) enables delegation mode for your subdomain. While delegation is active, all DNS editing is locked. See the Delegation documentation for details on how to manage this.
+    </Warning>
+
+    **Use case:** Delegate a sub-zone to your own nameservers.
+
+    ```text example NS record
+    Type:    NS
+    Host:    @
+    Content: ns1.example.com
+    TTL:     3600
+    ```
+  </Accordion>
+</AccordionGroup>

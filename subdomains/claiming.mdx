@@ -1,0 +1,86 @@
+---
+title: "How to Claim and Manage Your Subdomain on nxtdev.xyz"
+description: "Learn how to claim a free subdomain, check real-time availability, understand status badges, and safely delete a subdomain you no longer need."
+sidebarTitle: "Claiming"
+---
+
+Every subdomain you claim through nxtdev.xyz becomes a real, Cloudflare-backed DNS zone. Before you start, make sure your GitHub account is linked in your profile — the dashboard will redirect you to the verification page if it isn't.
+
+<Note>
+  Your GitHub account must be verified before you can claim a subdomain. Navigate to **Settings** in the dashboard and connect GitHub if you haven't already.
+</Note>
+
+## How to claim a subdomain
+
+<Steps>
+  <Step title="Open the Domains page">
+    Navigate to **Dashboard > Domains**. The page shows a claim form at the top and lists any subdomains you already own below it.
+  </Step>
+
+  <Step title="Enter a label">
+    Type a label — for example, `alice` — into the input field. The label is the part before `.nxtdev.xyz`. As you type, the form checks availability in real time and shows whether the label is available, taken, reserved, or blocked. The full resulting subdomain is shown next to the field, e.g. `alice.nxtdev.xyz`.
+  </Step>
+
+  <Step title="Submit the form">
+    Click **Claim**. If the label passes all validation and availability checks, the subdomain is created immediately and appears in your subdomain list.
+  </Step>
+</Steps>
+
+## What makes a label valid
+
+Labels go through the following rules before a subdomain can be created. These rules are enforced by the validator in the platform's source code.
+
+| Rule | Detail |
+|------|--------|
+| Minimum length | 4 characters |
+| Maximum length | 32 characters |
+| Allowed characters | Lowercase letters (`a–z`), digits (`0–9`), and hyphens (`-`) |
+| No leading hyphen | Cannot start with `-` |
+| No trailing hyphen | Cannot end with `-` |
+| No consecutive hyphens | Cannot contain `--` |
+| Case | Labels are lowercased automatically before submission |
+
+<Tip>
+  The label is always normalized to lowercase. You can type `Alice` or `ALICE` and it will be stored and resolved as `alice`.
+</Tip>
+
+## What blocks a label
+
+Even a structurally valid label may be unavailable for the following reasons:
+
+<AccordionGroup>
+  <Accordion title="Already taken">
+    Another user has already claimed that label. The availability check returns `"reason": "Already taken"`. Choose a different label.
+  </Accordion>
+
+  <Accordion title="Reserved label">
+    Some labels are reserved by the nxtdev.xyz admin team. Reserved labels return `"reason": "Reserved - contact Administrator to claim this domain"`. If you have a legitimate need for a reserved label, contact the admin.
+  </Accordion>
+
+  <Accordion title="Blocked by safety policy">
+    The platform's safety system scans labels for known phishing patterns and impersonation keywords. If a match is found, the label is blocked with `"reason": "Blocked by safety policy"`. Legitimate project names are never blocked.
+  </Accordion>
+</AccordionGroup>
+
+## Status badges
+
+Each subdomain in your list displays a status badge.
+
+<CardGroup cols={2}>
+  <Card title="Active" icon="circle-check">
+    The subdomain is live and DNS is resolving normally. Records you add or update take effect immediately via Cloudflare.
+  </Card>
+  <Card title="Suspended" icon="circle-x">
+    The subdomain has been suspended, typically because the accumulated risk score crossed the automatic suspension threshold. DNS stops resolving until the suspension is lifted. Contact support to appeal.
+  </Card>
+</CardGroup>
+
+A **Delegated** badge may also appear if you have pointed custom nameservers at the subdomain. This means DNS is managed by your own nameservers rather than directly through nxtdev.xyz records.
+
+## Deleting a subdomain
+
+To delete a subdomain, click the **Delete** button next to it in your subdomain list and confirm the prompt.
+
+<Warning>
+  Deletion is permanent and cannot be undone. All DNS records associated with the subdomain are removed from Cloudflare immediately, and the label is released back into the available pool. Any services pointing to that subdomain will stop resolving.
+</Warning>

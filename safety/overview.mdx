@@ -1,0 +1,64 @@
+---
+title: "How nxtdev.xyz Automatically Checks for Abuse"
+description: "Learn how nxtdev.xyz checks every subdomain claim and DNS record for phishing patterns, abusive IPs, and other risks to keep the platform safe."
+sidebarTitle: "Safety System"
+---
+
+Every subdomain claim and DNS record you submit on nxtdev.xyz passes through an automated safety pipeline before it is accepted. These checks run in real time — you never wait for a manual review under normal circumstances, and legitimate projects are never blocked. If a check rejects your submission, you will see a clear error message explaining why.
+
+## Phishing keyword detection
+
+When you claim a subdomain, the label you choose is compared against a list of known impersonation and brand-spoofing patterns. Labels that match — for example, those that mimic payment processors, identity providers, or cryptocurrency services — are rejected immediately with the message **"Blocked by safety policy."**
+
+<Note>
+  This check targets known phishing patterns only. Generic project names, personal handles, and legitimate product names are not affected. If your subdomain label was incorrectly blocked, contact [support@nxtdev.xyz](mailto:support@nxtdev.xyz).
+</Note>
+
+## IP reputation checks on A and AAAA records
+
+Any IP address you submit in an `A` or `AAAA` record is checked against [AbuseIPDB](https://www.abuseipdb.com/) using a 90-day reporting window. If the IP carries a high abuse confidence score, the record is rejected.
+
+This protects other users on the platform and prevents nxtdev.xyz subdomains from being used to point traffic at known malicious infrastructure.
+
+## Private and reserved IP blocking
+
+You cannot use private or reserved IP ranges in `A` or `AAAA` records. The following ranges are always blocked:
+
+- `10.0.0.0/8`
+- `172.16.0.0/12` (covers `172.16.x` through `172.31.x`)
+- `192.168.0.0/16`
+
+Pointing a public subdomain at a private IP has no practical use for external visitors and is a common misconfiguration vector, so these ranges are rejected at submission time.
+
+## Risk score
+
+Each subdomain has a risk score between 0 and 100. The score accumulates over time based on the records the subdomain holds and any abuse signals associated with it. You can think of it as a rolling reputation meter.
+
+<Warning>
+  If a subdomain's risk score reaches the suspension threshold, it is automatically suspended. DNS changes and delegation changes are blocked while a subdomain is suspended. The subdomain itself becomes read-only.
+</Warning>
+
+## Suspension and appeals
+
+A suspended subdomain cannot have its DNS records modified or its delegation changed until the suspension is lifted. If your subdomain was suspended and you believe the decision was made in error, contact [support@nxtdev.xyz](mailto:support@nxtdev.xyz) with your account details and the full subdomain name.
+
+<AccordionGroup>
+  <Accordion title="What does 'suspended' mean in practice?">
+    Your subdomain entry remains in the system and any previously published DNS records may still resolve, but you cannot add, edit, or remove records or change nameserver delegation until the suspension is lifted.
+  </Accordion>
+  <Accordion title="How long does an appeal take?">
+    Appeals are reviewed manually. You can expect a response within 24 hours on business days. For urgent cases involving active projects, mention that in your email to [support@nxtdev.xyz](mailto:support@nxtdev.xyz).
+  </Accordion>
+  <Accordion title="Can I prevent my subdomain from being suspended?">
+    The best way to avoid suspension is to avoid pointing your subdomain at IPs with poor reputation histories and to use it only for its intended purpose. If your IP was recently reassigned to you and carries legacy abuse reports, mention this when contacting support.
+  </Accordion>
+</AccordionGroup>
+
+## Legitimate projects are always welcome
+
+The safety system is tuned to catch abuse, not to block real projects. If you are building something legitimate and any of these checks are affecting you incorrectly, you have two options:
+
+- Email [support@nxtdev.xyz](mailto:support@nxtdev.xyz) with a description of your project and the subdomain involved.
+- Use the [report page](/safety/reporting) to flag an issue with your own subdomain.
+
+A member of the team will review your case and resolve it promptly.

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "nxtdev.xyz",
+  "theme": "luma",
+  "colors": {
+    "primary": "#00ff88",
+    "light": "#00ff88",
+    "dark": "#00cc6a"
+  },
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/avrxtcloud/nxtdev-xyz"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Subdomains",
+            "pages": [
+              "subdomains/claiming",
+              "subdomains/limits",
+              "subdomains/naming-rules"
+            ]
+          },
+          {
+            "group": "DNS Records",
+            "pages": [
+              "dns/overview",
+              "dns/record-types",
+              "dns/propagation"
+            ]
+          },
+          {
+            "group": "Delegation",
+            "pages": [
+              "delegation/overview",
+              "delegation/nameservers"
+            ]
+          },
+          {
+            "group": "Safety & Abuse",
+            "pages": [
+              "safety/overview",
+              "safety/reporting"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "faq",
+              "troubleshooting"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

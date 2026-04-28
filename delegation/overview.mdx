@@ -1,0 +1,58 @@
+---
+title: "How Nameserver Delegation Works on nxtdev.xyz"
+description: "Learn how nameserver delegation works on nxtdev.xyz, when to use it, and how it compares to the default Cloudflare-managed DNS mode."
+sidebarTitle: "Overview"
+---
+
+By default, nxtdev.xyz manages DNS for your subdomain internally through Cloudflare — you add records in the dashboard and they propagate immediately. Delegation is an alternative mode where you point NS records at your own nameservers, handing full DNS control to an external provider such as Cloudflare, AWS Route 53, or any authoritative DNS service you operate.
+
+## Default mode vs. delegation mode
+
+<AccordionGroup>
+  <Accordion title="Default mode: nxtdev.xyz manages DNS">
+    In default mode, nxtdev.xyz creates and maintains all DNS records on your behalf inside the shared Cloudflare zone. You use the dashboard to add, edit, and delete records. This is the right choice for most users — it is fast to set up and requires no external DNS provider.
+
+    **Limits in default mode:**
+    - Up to 100 DNS records per subdomain (combined with any delegated NS entries)
+    - Record types supported in the dashboard: `A`, `AAAA`, `CNAME`, `TXT`, `MX`, `SRV`
+    - TTL configurable from 60 to 86400 seconds per record
+  </Accordion>
+  <Accordion title="Delegation mode: you control DNS externally">
+    In delegation mode, you add one or more NS records pointing at your own nameservers. Those nameservers become authoritative for your subdomain. You manage every record — and every setting — directly in your external provider's interface.
+
+    **What changes in delegation mode:**
+    - Internal DNS editing in the nxtdev.xyz dashboard is disabled (read-only)
+    - A **Delegation enabled** badge appears on your subdomain in the dashboard
+    - You can add unlimited records, set custom TTLs, and use any record type your provider supports
+  </Accordion>
+</AccordionGroup>
+
+## When to use delegation
+
+Delegation is useful when you need something the built-in dashboard does not support:
+
+- **Unlimited records** — the default tier caps each subdomain at 100 records
+- **Custom TTLs** — set low TTLs for rapid failover or high TTLs to reduce resolver load
+- **Advanced record types** — `CAA`, `TLSA`, `NAPTR`, `DNSKEY`, and other types not available in the dashboard
+- **Existing DNS provider** — you already manage DNS in Route 53, Cloudflare, or another platform and want your nxtdev.xyz subdomain in the same place
+- **Automation** — use Terraform, Pulumi, or provider APIs to manage DNS as code
+
+<Tip>
+  If the 100-record limit and supported record types cover your needs, stay in default mode — it is simpler and there is nothing to configure externally.
+</Tip>
+
+## Effect on internal DNS editing
+
+Once you add any delegated nameserver, the dashboard locks internal DNS editing for that subdomain. The DNS records page becomes read-only and shows a notice that delegation is active.
+
+<Warning>
+  Enabling delegation immediately disables internal DNS editing. Any records you added through the dashboard are no longer authoritative once your external nameservers respond to queries. Make sure your external provider has all the records you need before adding nameservers.
+</Warning>
+
+## Switching back to default DNS
+
+To re-enable internal DNS editing, remove all delegated nameservers. You can do this by clicking **Switch back to default DNS** on the Nameservers page — this removes all NS records at once and returns the subdomain to default mode. You can also remove nameservers one at a time; editing unlocks as soon as the last one is removed.
+
+## Next step
+
+See [Nameservers](/delegation/nameservers) for step-by-step instructions on adding and removing delegated nameservers from the dashboard.

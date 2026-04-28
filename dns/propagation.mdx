@@ -1,0 +1,67 @@
+---
+title: "Checking DNS Propagation for Your nxtdev.xyz Records"
+description: "Use the built-in propagation checker to see what public resolvers return for your records, and learn what to do when a record hasn't appeared yet."
+sidebarTitle: "Propagation"
+---
+
+After you create or update a DNS record, public resolvers around the world need to pick up the change before it takes effect everywhere. nxtdev.xyz includes a built-in propagation checker that queries live DNS resolvers on demand so you can verify a record without leaving the dashboard.
+
+## How the propagation checker works
+
+The **Check propagation** button in the Records table performs a live DNS lookup against Cloudflare's public resolver. It queries the fully qualified domain name and record type you saved, and shows you what that resolver currently returns — so you can confirm whether your record is live without leaving the dashboard.
+
+A successful response has this shape:
+
+```json example propagation response
+{
+  "fqdn": "api.alice.nxtdev.xyz",
+  "type": "A",
+  "doh": {
+    "Status": 0,
+    "Answer": [
+      {
+        "name": "api.alice.nxtdev.xyz.",
+        "type": 1,
+        "TTL": 3600,
+        "data": "203.0.113.42"
+      }
+    ]
+  }
+}
+```
+
+When `doh.Answer` contains your expected value, the record has propagated to Cloudflare's resolver.
+
+## Checking propagation for a record
+
+<Steps>
+  <Step title="Go to the Records page">
+    Navigate to **Dashboard → Domains**, select your subdomain, then click **Records**.
+  </Step>
+  <Step title="Find the record in the table">
+    Locate the row for the record you want to verify. Each row shows the record's Type, Name, Content, TTL, and Proxy status.
+  </Step>
+  <Step title="Click Check propagation">
+    Click the **Check propagation** button in the Actions column for that row. The dashboard sends a live query to a public DNS resolver and displays what it currently returns.
+  </Step>
+  <Step title="Read the result">
+    If the `Answer` section contains your record's content, propagation is complete. If the response is empty or shows a previous value, the change has not yet reached that resolver.
+  </Step>
+</Steps>
+
+<Note>
+  Because nxtdev.xyz uses Cloudflare's authoritative DNS infrastructure, new and updated records typically propagate globally in under 60 seconds. If a record does not appear right away, wait a moment and check again.
+</Note>
+
+## What to do if a record hasn't propagated
+
+<Tip>
+  Start with the record itself before assuming a propagation delay. Open the record's edit page and confirm the host, content, and type are all exactly what you intended — a typo in the content field is the most common cause of a record appearing to be missing.
+</Tip>
+
+If the record looks correct but the propagation check still returns no answer:
+
+1. **Wait and retry.** Most changes resolve within 60 seconds. Occasionally a resolver takes a bit longer to flush its cache.
+2. **Check the TTL of the previous record.** If you replaced an existing record, resolvers that already cached the old value will hold it until the previous TTL expires.
+3. **Verify the record exists in the Records table.** If the row is gone, the record may have been deleted. Re-create it and check propagation again.
+4. **Confirm your subdomain is active.** Suspended subdomains block DNS changes. Check the subdomain's status on the Domains page.

@@ -1,0 +1,92 @@
+---
+title: "Add and Remove Delegated Nameservers on nxtdev.xyz"
+description: "Step-by-step instructions for adding delegated nameservers to your nxtdev.xyz subdomain and switching back to default Cloudflare-managed DNS."
+sidebarTitle: "Nameservers"
+---
+
+The Nameservers page lets you add NS records that delegate DNS authority for your subdomain to an external provider. Once any nameserver is added, the dashboard locks internal DNS editing for that subdomain. Removing all nameservers returns the subdomain to default mode.
+
+<Warning>
+  Adding a delegated nameserver disables internal DNS editing immediately. Your external nameservers become authoritative for the subdomain, so ensure all required records exist in your external provider before proceeding.
+</Warning>
+
+## Add a delegated nameserver
+
+<Steps>
+  <Step title="Open the Nameservers page">
+    Go to **Dashboard** > **Domains**, select the subdomain you want to delegate, then click **Nameservers** in the subdomain navigation.
+  </Step>
+  <Step title="Enter the nameserver hostname">
+    In the **Nameserver delegation** card, type the hostname of your nameserver into the input field. Use a fully qualified hostname, for example:
+
+    ```text
+    ns1.example.com
+    ```
+
+    Common examples by provider:
+
+    <CodeGroup>
+
+    ```text Cloudflare
+    aria.ns.cloudflare.com
+    bob.ns.cloudflare.com
+    ```
+
+    ```text AWS Route 53
+    ns-123.awsdns-45.com
+    ns-678.awsdns-90.net
+    ```
+
+    ```text Custom nameservers
+    ns1.yourdomain.com
+    ns2.yourdomain.com
+    ```
+
+    </CodeGroup>
+  </Step>
+  <Step title="Click Add nameserver">
+    Click **Add nameserver**. The nameserver appears in the **Delegated nameservers** table. Repeat this step for each additional nameserver you want to add — most providers require at least two for redundancy.
+  </Step>
+  <Step title="Verify delegation is active">
+    After adding at least one nameserver, the dashboard shows a **Delegation enabled** badge on the subdomain and the DNS records page becomes read-only. Configure all your DNS records in your external provider's interface.
+  </Step>
+</Steps>
+
+## Remove a single nameserver
+
+<Steps>
+  <Step title="Open the Nameservers page">
+    Go to **Dashboard** > **Domains**, select the subdomain, then click **Nameservers**.
+  </Step>
+  <Step title="Find the nameserver in the table">
+    The **Delegated nameservers** table lists every NS record currently configured for the subdomain.
+  </Step>
+  <Step title="Click Remove">
+    Click **Remove** on the row for the nameserver you want to delete. The NS record is removed from Cloudflare. If other nameservers remain, delegation stays active.
+  </Step>
+</Steps>
+
+<Note>
+  Internal DNS editing only re-enables when there are zero delegated nameservers. Removing one nameserver from a set of two leaves delegation active.
+</Note>
+
+## Switch back to default DNS
+
+To remove all delegated nameservers at once and re-enable internal DNS editing:
+
+<Steps>
+  <Step title="Open the Nameservers page">
+    Go to **Dashboard** > **Domains**, select the subdomain, then click **Nameservers**.
+  </Step>
+  <Step title="Click Switch back to default DNS">
+    Click **Switch back to default DNS (remove all delegation)**. This removes every NS record in one action and immediately re-enables internal DNS editing in the dashboard.
+  </Step>
+</Steps>
+
+<Tip>
+  Before switching back, note which records you have configured in your external provider. Internal DNS editing starts with a clean slate — the dashboard does not import records from your external provider.
+</Tip>
+
+## Suspended subdomains
+
+If your subdomain is suspended, delegation changes are blocked. The **Add nameserver** form, the **Remove** buttons, and the **Switch back to default DNS** button are all disabled until the subdomain is reinstated. Contact support at `support@nxtdev.xyz` if you believe your subdomain was suspended in error.

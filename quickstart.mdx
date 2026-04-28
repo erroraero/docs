@@ -1,0 +1,81 @@
+---
+title: "Get Started: Claim Your First nxtdev.xyz Subdomain"
+description: "Sign in, link your GitHub account, claim a subdomain label, and add your first DNS record. Your nxtdev.xyz subdomain goes live in under two minutes."
+sidebarTitle: "Quick Start"
+---
+
+This guide walks you through claiming a subdomain under `nxtdev.xyz` and pointing it at a real host. The whole process takes under two minutes.
+
+## Prerequisites
+
+- A GitHub account — required for identity verification before you can claim
+- The host you want to point to (a Vercel deployment, a VPS IP address, etc.)
+
+<Steps>
+  <Step title="Sign up or sign in">
+    Go to [nxtdev.xyz](https://nxtdev.xyz) and create an account or sign in. You can register with your email address or continue directly with GitHub.
+  </Step>
+
+  <Step title="Link your GitHub account">
+    Before you can claim a subdomain, you must connect a GitHub account for identity verification. Open **Settings** in the dashboard and click **Connect GitHub**. You only need to do this once.
+
+    <Note>
+      The claim form on the Domains page stays disabled until GitHub verification is complete. If you signed in with GitHub during registration, this step may already be done.
+    </Note>
+  </Step>
+
+  <Step title="Claim a subdomain">
+    Navigate to **Dashboard > Domains**. In the "Claim a subdomain" card, enter a base label — for example, `alice` — and submit the form. nxtdev.xyz registers `alice.nxtdev.xyz` under your account.
+
+    Label rules:
+    - 4–32 characters
+    - Lowercase letters, digits, and hyphens only (`a-z`, `0-9`, `-`)
+    - Cannot start or end with a hyphen, or contain `--`
+
+    <Tip>
+      You can claim up to 2 subdomains on the free tier. The dashboard shows how many you have used next to the claim form.
+    </Tip>
+  </Step>
+
+  <Step title="Add a DNS record">
+    Click **Records** next to your new subdomain to open the DNS editor. Add a record that points to your host.
+
+    Use `@` as the host name to target the apex (`alice.nxtdev.xyz`), or use a relative name like `api` to target `api.alice.nxtdev.xyz`.
+
+    **Vercel deployment (CNAME)**
+
+    ```text
+    Type:   CNAME
+    Host:   @
+    Value:  cname.vercel-dns.com
+    TTL:    Auto
+    ```
+
+    **VPS or dedicated server (A record)**
+
+    ```text
+    Type:   A
+    Host:   @
+    Value:  203.0.113.42
+    TTL:    60
+    ```
+
+    <Warning>
+      Private IP ranges (`10.x.x.x`, `192.168.x.x`, `172.16–31.x.x`) are blocked on `A` and `AAAA` records. Use a public IP address.
+    </Warning>
+  </Step>
+
+  <Step title="Verify propagation">
+    After saving the record, click **Check propagation** on the record row. nxtdev.xyz queries public resolvers and shows what they currently return for your record.
+
+    Because the DNS infrastructure runs on Cloudflare, most records are visible globally within 60 seconds.
+  </Step>
+</Steps>
+
+## What's next
+
+Your subdomain is live. Here are a few things you can do from here:
+
+- Add more record types — `MX` for email, `TXT` for SPF/DKIM, `SRV` for game servers
+- Read [DNS records](/dns/overview) for the full reference on each record type
+- Read [Delegation](/delegation/overview) if you want to point your own nameservers at your subdomain
