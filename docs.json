@@ -3,9 +3,9 @@
   "name": "nxtdev.xyz",
   "theme": "luma",
   "colors": {
-    "primary": "#00ff88",
-    "light": "#00ff88",
-    "dark": "#00cc6a"
+    "primary": "#fd0c0c",
+    "light": "#ffce00",
+    "dark": "#00ffde"
   },
   "navbar": {
     "primary": {
