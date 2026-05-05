@@ -72,7 +72,9 @@
   },
   "footer": {
     "socials": {
-      "website": "https://nxtdev.xyz"
+      "website": "https://nxtdev.xyz",
+      "github": "https://github.com/erroraero/docs",
+      "discord": "https://discord.gg/f8VYrmZKu"
     }
   },
   "appearance": {
