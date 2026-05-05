@@ -1,18 +1,52 @@
-# Mintlify Starter Kit
+# nxtdev.xyz — Docs
 
-Use the starter kit to get your docs deployed and ready to customize.
+Official documentation for [nxtdev.xyz](https://nxtdev.xyz) — a free subdomain registry for developers.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+Built with [Mintlify](https://mintlify.com) and auto-deployed on every push to `main`.
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+---
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+## Contributing
 
-## AI-assisted writing
+We welcome contributions from the community — typo fixes, content improvements, new guides, whatever helps developers get started faster.
+
+### Before you start
+
+- All changes go through a **Pull Request** — direct pushes to `main` are blocked
+- PRs require **1 approval** from a maintainer before merging
+- Use the issue and PR templates provided
+
+### Making a change
+
+1. Fork the repo
+2. Create a branch — `docs/your-change` or `fix/broken-link`
+3. Make your changes
+4. Open a PR and fill out the template
+5. Wait for review ✅
+
+---
+
+## Local Development
+
+Install the Mintlify CLI:
+
+```bash
+npm i -g mint
+```
+
+Run the local preview at the root of the repo (where `docs.json` lives):
+
+```bash
+mint dev
+```
+
+Preview available at `http://localhost:3000`.
+
+> If something looks off, run `mint update` to grab the latest CLI version.
+
+---
+
+## AI-assisted Writing
 
 Set up your AI coding tool to work with Mintlify:
 
@@ -20,36 +54,28 @@ Set up your AI coding tool to work with Mintlify:
 npx skills add https://mintlify.com/docs
 ```
 
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
+Works with Claude Code, Cursor, Windsurf, and others. See the [AI tools guide](https://mintlify.com/docs/ai-tools) for tool-specific setup.
 
-See the [AI tools guides](/ai-tools) for tool-specific setup.
+---
 
-## Development
+## Deployment
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+This repo is connected to Mintlify via the GitHub app. Every merge to `main` triggers an automatic production deployment — no manual steps needed.
 
-```
-npm i -g mint
-```
+---
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+## Maintainers
 
-```
-mint dev
-```
+| GitHub | Role |
+|---|---|
+| [@erroraero](https://github.com/erroraero) | Maintainer |
+| [@aviorxt](https://github.com/aviorxt) | Maintainer |
+| [@avrxtcloud](https://github.com/avrxtcloud) | Maintainer |
 
-View your local preview at `http://localhost:3000`.
+---
 
-## Publishing changes
+## Resources
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
-
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+- [nxtdev.xyz](https://nxtdev.xyz)
+- [Mintlify Docs](https://mintlify.com/docs)
+- [Open an Issue](https://github.com/nxtdev-xyz/docs/issues/new/choose)
