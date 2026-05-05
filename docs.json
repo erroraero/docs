@@ -75,7 +75,18 @@
       "website": "https://nxtdev.xyz",
       "github": "https://github.com/erroraero/docs",
       "discord": "https://discord.gg/f8VYrmZKu"
-    }
+    },
+    "links": [
+      {
+        "header": "Social",
+        "items": [
+          {
+            "label": "Discord",
+            "href": "https://discord.gg/f8VYrmZKu"
+          }
+        ]
+      }
+    ]
   },
   "appearance": {
     "default": "dark"
