@@ -66,5 +66,8 @@
         "icon": "1"
       }
     ]
+  },
+  "fonts": {
+    "family": "Lato"
   }
 }
