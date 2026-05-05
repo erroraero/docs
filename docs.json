@@ -78,5 +78,9 @@
   "appearance": {
     "default": "dark"
   },
-  "logo": "/images/Picsart_26-05-05_17-57-38-204.png"
+  "logo": {
+    "light": "/images/Picsart_26-05-05_17-57-38-204.png",
+    "dark": "/images/Picsart_26-05-05_17-57-38-204.png",
+    "href": "https://www.nxtdev.xyz"
+  }
 }
