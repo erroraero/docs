@@ -74,5 +74,9 @@
     "socials": {
       "website": "https://nxtdev.xyz"
     }
-  }
+  },
+  "appearance": {
+    "default": "dark"
+  },
+  "logo": "/images/blue-white-logo.png"
 }
